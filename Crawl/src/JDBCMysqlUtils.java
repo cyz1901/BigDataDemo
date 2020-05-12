@@ -2,7 +2,7 @@
 import java.sql.*;
 
 public class JDBCMysqlUtils {
-    private static final String connectionURL = "jdbc:mysql://localhost:3306/bigdata?useSSL=false&serverTimezone=UTC";
+    private static final String connectionURL = "jdbc:mysql://localhost:3306/bigdata?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
     private static final String username = "root";
     private static final String password = "123456";
 

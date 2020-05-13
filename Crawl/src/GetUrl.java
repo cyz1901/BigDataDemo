@@ -3,6 +3,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.junit.jupiter.api.Test;
 
 
 import java.io.*;
@@ -18,8 +19,10 @@ public class GetUrl {
     String testURL;
     java.sql.Connection connection = null;
     PreparedStatement preparedStatement = null;
-    String urlString = "INSERT INTO dataurl (url) VALUES (?)";
+    String urlString = "INSERT INTO dataurl (url,name,cost) VALUES (?,?,?)";
 
+
+    @Test
     public void getGrade() throws IOException, InterruptedException, SQLException {
 
         for (int i = 1 ; i<51; i++) {
@@ -28,15 +31,24 @@ public class GetUrl {
             con = Jsoup.connect(testURL);
             document = con.get();
             pTable = document.body().getElementsByClass("li-itemmod");
-            fileWriter = new FileWriter("Crawl/resources/link.txt",true);
+            //System.out.println(pTable);
+            //fileWriter = new FileWriter("Crawl/resources/link.txt",true);
+
             for (Element p : pTable){
-                fileWriter.write(p.attr("link")+"\r\n");
-                System.out.println(p.attr("link"));
+                //fileWriter.write(p.attr("link")+"\r\n");
+                //System.out.println(p.attr("link") + p.attr("alt"));
+                System.out.println(p.select(".img").attr("alt")
+                        +p.select("strong").text()
+                );
 
             }
+
+
             Thread.currentThread().sleep(2000);
             System.out.println(i);
-            fileWriter.close();
+
+
+            //fileWriter.close();
         }
 
         //System.out.println(pTable.toString());
@@ -54,6 +66,8 @@ public class GetUrl {
             pTable = document.body().getElementsByClass("li-itemmod");
             for (Element p : pTable){
                 preparedStatement.setString(1,p.attr("link"));
+                preparedStatement.setString(2,p.select(".img").attr("alt"));
+                preparedStatement.setString(3,p.select("strong").text());
                 preparedStatement.executeUpdate();
                 System.out.println(p.attr("link"));
 

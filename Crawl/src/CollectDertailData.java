@@ -32,10 +32,10 @@ public class CollectDertailData{
 
     @Test
     public void cattest() throws IOException {
-        con = Jsoup.connect("https://hangzhou.anjuke.com/community/");
+        con = Jsoup.connect("https://hangzhou.anjuke.com/community/view/796147");
         Document document = con.get();
-        Elements link = document.body().getElementsByTag("strong");
-        System.out.println(link);
+        Elements link = document.body().select("dd");
+        System.out.println(link.eq(5));
     }
 
 

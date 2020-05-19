@@ -89,11 +89,11 @@ public class CollectDertailData{
             System.out.println("success!");
 
             resultSet_two.executeUpdate();
-            Thread.currentThread().sleep((long)(300*Math.random()));
+            Thread.currentThread().sleep((long)(1000*Math.random()));
 
             if(count%50==0){
                 System.out.println("开始休眠");
-                Thread.currentThread().sleep((long)(9000*Math.random()));
+                Thread.currentThread().sleep((long)(10000*Math.random()));
             }
 
 

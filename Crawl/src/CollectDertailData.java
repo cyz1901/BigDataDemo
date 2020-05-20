@@ -17,7 +17,7 @@ public class CollectDertailData{
     ResultSet resultSet_one;
     PreparedStatement resultSet_two;
     Statement statement;
-    String selString = "SELECT * FROM dataurl";
+    String selString = "SELECT * FROM dataurl where urlid >1070";
     String setString = "INSERT INTO detailvillage (地址,建造年代,绿化率,物业费,总面积,名字) VALUES (?,?,?,?,?,?)";
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
     Document document_find;
@@ -35,7 +35,7 @@ public class CollectDertailData{
         while (resultSet_one.next()){
             System.out.println(resultSet_one.getString("url"));
             con = Jsoup.connect(resultSet_one.getString("url"));
-        //con = Jsoup.connect("https://hangzhou.anjuke.com/community/view/160574");
+        //con = Jsoup.connect("https://hangzhou.anjuke.com/community/view/160205");
             document_find = con.get();
             link_find = document_find.body().select("dd");
             resultSet_two.setString(1,
@@ -68,7 +68,7 @@ public class CollectDertailData{
             if (!link_find.eq(5).text().equals("暂无数据")) {
                 resultSet_two.setString(4,
                         Pattern.compile("[\\u4e00-\\u9fa5/㎡]").matcher(link_find.eq(5).text()).replaceAll(""));
-                System.out.println(Pattern.compile("[\\u4e00-\\u9fa5/㎡]").matcher(link_find.eq(5).text()).replaceAll(""));
+                //System.out.println(Pattern.compile("[\\u4e00-\\u9fa5/㎡]").matcher(link_find.eq(5).text()).replaceAll(""));
             } else {
                 resultSet_two.setString(4,
                         null);
@@ -86,14 +86,15 @@ public class CollectDertailData{
 
             resultSet_two.setString(6,
                     document_find.select(".map-link").attr("title"));
+            //System.out.println(document_find.select(".map-link").attr("title"));
             System.out.println("success!");
 
             resultSet_two.executeUpdate();
-            Thread.currentThread().sleep((long)(1000*Math.random()));
+            Thread.currentThread().sleep((long)(5000*Math.random()));
 
-            if(count%50==0){
+            if(count%30==0){
                 System.out.println("开始休眠");
-                Thread.currentThread().sleep((long)(10000*Math.random()));
+                Thread.currentThread().sleep((long)(60000*Math.random()));
             }
 
 
